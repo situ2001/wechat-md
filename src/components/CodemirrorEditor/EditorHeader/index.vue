@@ -11,6 +11,10 @@
             导入 .md
             <input hidden type="file" ref="fileInput" accept=".md" />
           </el-dropdown-item>
+          <el-dropdown-item @click.native="$emit('show-local-parse-dialog')">
+            <i class="el-icon-upload2"></i>
+            解析 .md
+          </el-dropdown-item>
           <el-dropdown-item @click.native="$emit('download')">
             <i class="el-icon-download"></i>
             导出 .md
@@ -336,11 +340,14 @@ export default {
     // 复制到微信公众号
     copy() {
       this.$emit(`startCopy`)
-      setTimeout(() => {
-        solveWeChatImage()
+
+      setTimeout(async () => {
+        await solveWeChatImage()
 
         const clipboardDiv = document.getElementById(`output`)
         clipboardDiv.innerHTML = mergeCss(clipboardDiv.innerHTML)
+
+        console.log(`clipboardDiv`, clipboardDiv.innerHTML)
 
         // 调整 katex 公式元素为行内标签，目的是兼容微信公众号渲染
         clipboardDiv.innerHTML = clipboardDiv.innerHTML
@@ -364,7 +371,14 @@ export default {
         range.setStartBefore(clipboardDiv.firstChild)
         range.setEndAfter(clipboardDiv.lastChild)
         window.getSelection().addRange(range)
+
+        // console.log(`window.getSelection()`, window.getSelection())
+
         document.execCommand(`copy`)
+
+        // write clipboardDiv to clipboard using clipboard API
+        // navigator.clipboard.writeText(clipboardDiv.innerHTML)
+
         window.getSelection().removeAllRanges()
         clipboardDiv.innerHTML = this.output
         // 输出提示

@@ -369,3 +369,39 @@ export function removeLeft(str) {
   // 删除空白符
   return lines.map((item) => item.slice(minSpaceNum)).join(`\n`)
 }
+
+export function isHttpUrl(url) {
+  return /^https?:\/\//.test(url)
+}
+
+/**
+ * ./a/b/c => a/b/c
+ * @param {string} path
+ */
+export function normalizeRelativePath(path) {
+  return path.replace(/^\.\//, ``)
+}
+
+/**
+ * resolve to browser fs path, for example:
+ * (a/b/c, ./11.png) => a/b/c/11.png
+ * (a/b/c, ../11.png) => a/b/11.png
+ * @param {*} basePath
+ * @param {*} urlPath
+ */
+export function resolveUrlPath(basePath, urlPath) {
+  const base = basePath.split(`/`).filter((item) => item.length > 0)
+  const url = urlPath.split(`/`).filter((item) => item.length > 0)
+  const result = []
+  url.forEach((item) => {
+    if (item === `.`) {
+      return
+    }
+    if (item === `..`) {
+      base.pop()
+      return
+    }
+    result.push(item)
+  })
+  return [...base, ...result].join(`/`)
+}

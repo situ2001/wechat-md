@@ -15,6 +15,7 @@
           @show-about-dialog="aboutDialogVisible = true"
           @show-dialog-form="insertFormDialogVisible = true"
           @show-dialog-upload-img="dialogUploadImgVisible = true"
+          @show-local-parse-dialog="localParseDialogVisible = true"
           @startCopy=";(isCoping = true), (backLight = true)"
           @endCopy="endCopy"
         ></editor-header>
@@ -69,6 +70,12 @@
       @uploadImage="uploadImage"
       @uploaded="uploaded"
     ></upload-img-dialog>
+    <local-parse-dialog
+      :visible="localParseDialogVisible"
+      @close="localParseDialogVisible = false"
+      @parsed="parsed"
+    >
+    </local-parse-dialog>
     <about-dialog
       :visible="aboutDialogVisible"
       @close="aboutDialogVisible = false"
@@ -98,6 +105,7 @@ import AboutDialog from '@/components/CodemirrorEditor/AboutDialog'
 import InsertFormDialog from '@/components/CodemirrorEditor/InsertFormDialog'
 import RightClickMenu from '@/components/CodemirrorEditor/RightClickMenu'
 import UploadImgDialog from '@/components/CodemirrorEditor/UploadImgDialog'
+import LocalParseDialog from '@/components/CodemirrorEditor/LocalParseDialog.vue'
 import CssEditor from '@/components/CodemirrorEditor/CssEditor'
 import RunLoading from '@/components/RunLoading'
 
@@ -122,6 +130,7 @@ export default {
       showCssEditor: false,
       aboutDialogVisible: false,
       dialogUploadImgVisible: false,
+      localParseDialogVisible: false,
       insertFormDialogVisible: false,
       isCoping: false,
       isImgLoading: false,
@@ -142,6 +151,7 @@ export default {
     InsertFormDialog,
     RightClickMenu,
     UploadImgDialog,
+    LocalParseDialog,
   },
   computed: {
     ...mapState(useStore, {
@@ -165,6 +175,10 @@ export default {
     })
   },
   methods: {
+    parsed(mdText) {
+      this.editor.setValue(mdText)
+      this.onEditorRefresh()
+    },
     // 转换 markdown 中的本地图片为线上图片
     // todo 处理事件覆盖
     mdLocalToRemote() {

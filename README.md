@@ -14,9 +14,11 @@
 
 ## What does this fork do?
 
-该 fork 添加了一些自定义功能，主要是为了适配自己的工作流。
+该 fork 添加了一些自定义功能，主要是为了适配自己的工作流（带本地图片引用的 markdown 文件->微信公众号文章）。
 
 - 支持解析带本地图片的 markdown 文件，可直接将带本地图片的渲染内容复制到微信公众号编辑器。
+
+该项目部署至：[https://wechat-md-editor.vercel.app/](https://wechat-md-editor.vercel.app/)
 
 大致解析流程：parse local image url in md -> `File` -> `createObjectURL()` -> replace url in md file -> parse md -> render HTML
 

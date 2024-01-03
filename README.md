@@ -12,6 +12,23 @@
 
 </div>
 
+## What does this fork do?
+
+该 fork 添加了一些自定义功能，主要是为了适配自己的工作流程。
+
+- 支持解析带本地图片的 markdown 文件，可直接将带本地图片的渲染内容复制到微信公众号编辑器。
+
+大致解析流程：parse local image url in md -> `File` -> `createObjectURL()` -> replace url in md file -> parse md -> render HTML
+
+大致复制流程：copy start -> `new Image()` -> `Canvas` -> `canvas.toDataURL()` -> copy complete
+
+该功能的使用方法：
+
+1. 顶部菜单栏->文件->解析.md
+2. 打开同时包含目的 md 文件及其引用的所有本地图片的文件夹->选择 md 文件解析
+3. 点击右上角复制，等待复制成功
+4. 粘贴到微信公众号编辑器
+
 ## 项目介绍
 
 > 本项目基于 [wechat-format](https://github.com/lyricat/wechat-format) 进行二次开发，感谢 [lyricat](https://github.com/lyricat) 的创意和贡献！
@@ -20,8 +37,8 @@ Markdown 文档自动即时渲染为微信图文，让你不再为微信文章�
 
 ## 在线编辑器地址
 
-- Gitee Pages：https://doocs.gitee.io/md
-- GitHub Pages：https://doocs.github.io/md
+- Gitee Pages：<https://doocs.gitee.io/md>
+- GitHub Pages：<https://doocs.github.io/md>
 
 注：推荐使用 Chrome 浏览器，效果最佳。另外，对于国内（中国）的朋友，访问 [Gitee Pages](https://doocs.gitee.io/md) 速度会相对快一些。
 
@@ -169,9 +186,9 @@ md-cli 支持以下命令行参数：
 docker run -d -p 8080:80 doocs/md:latest
 ```
 
-容器运行起来之后，打开浏览器，访问 http://localhost:8080 即可。
+容器运行起来之后，打开浏览器，访问 <http://localhost:8080> 即可。
 
-关于本项目 Docker 镜像的更多详细信息，可以关注 https://github.com/doocs/docker-md
+关于本项目 Docker 镜像的更多详细信息，可以关注 <https://github.com/doocs/docker-md>
 
 ## 谁在使用
 
